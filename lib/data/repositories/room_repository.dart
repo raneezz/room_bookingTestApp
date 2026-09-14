@@ -4,5 +4,5 @@ import '../models/hotel_room.dart';
 import '../models/room_booking.dart';
 class RoomRepository {
   List<HotelRoom> getRooms()=>MockRooms.rooms;
-  List<RoomBooking> getBookings()=>MockBookings.bookings;
+ List<RoomBooking> getBookings()=>MockBookings.bookings;
 }

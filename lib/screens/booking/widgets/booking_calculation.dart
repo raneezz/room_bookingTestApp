@@ -22,7 +22,7 @@ class BookingCalculation extends StatelessWidget {
                 'BOOKING CALCULATION',
                 style: TextStyle(
                   color: AppColors.gold,
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -43,7 +43,7 @@ class BookingCalculation extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         color: Color(0xFFD5DDEC),
-                        fontSize: 13,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -86,7 +86,7 @@ class BookingCalculation extends StatelessWidget {
                 'Total Final Price',
                 style: TextStyle(
                   color: AppColors.secondaryText,
-                  fontSize: 15,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -97,7 +97,7 @@ class BookingCalculation extends StatelessWidget {
                     : CurrencyUtils.formatRupees(controller.subtotal),
                 style: const TextStyle(
                   color: AppColors.gold,
-                  fontSize: 30,
+                  fontSize: 28,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -108,7 +108,7 @@ class BookingCalculation extends StatelessWidget {
             'Nights × price per night • taxes not included',
             style: TextStyle(
               color: AppColors.green,
-              fontSize: 12,
+              fontSize: 11,
               fontWeight: FontWeight.w600,
             ),
           ),

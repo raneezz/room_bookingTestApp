@@ -51,7 +51,7 @@ class RoomCard extends StatelessWidget {
                 RoomImage(
                   room: room,
                   disabled: disabled,
-                  statusText: capacityExceeded ? 'FULL' : 'BOOKED',
+                  statusText: capacityExceeded ? 'UNAVAILABLE' : 'BOOKED',
                 ),
                 const SizedBox(width: 18),
                 Expanded(

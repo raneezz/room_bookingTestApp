@@ -22,10 +22,10 @@ class BookingController extends GetxController {
   static BookingController get to => Get.put(BookingController());
 
   BookingController({RoomRepository? repository})
-    : _repository = repository ?? RoomRepository();
+      :_repository=repository ?? RoomRepository();
   final RoomRepository _repository;
   late final List<HotelRoom> rooms;
-  late final List<RoomBooking> bookings;
+  late final RxList<RoomBooking> bookings;
   final checkIn = Rxn<DateTime>(),
       checkOut = Rxn<DateTime>(),
       selectedRoomCode = RxnString();
@@ -34,11 +34,10 @@ class BookingController extends GetxController {
       validationMessage = RxnString(),
       validationIsError = false.obs;
 
-  @override
-  void onInit() {
+  @override void onInit() {
     super.onInit();
     rooms = _repository.getRooms();
-    bookings = _repository.getBookings();
+   bookings = _repository.getBookings().obs;
   }
 
   int get totalGuests => adults.value + kids.value;
@@ -47,8 +46,8 @@ class BookingController extends GetxController {
 
   HotelRoom? get selectedRoom {
     final code = selectedRoomCode.value;
-    for (final _room in rooms) {
-      if (_room.code == code) return _room;
+    for (final r in rooms) {
+      if (r.code == code) return r;
     }
     return null;
   }
@@ -57,25 +56,21 @@ class BookingController extends GetxController {
       selectedRoom == null ? 0 : nights * selectedRoom!.pricePerNight;
 
   bool get datesAreValid {
-    final a = checkIn.value, b = checkOut.value;
+    final a = checkIn.value,
+        b = checkOut.value;
     if (a == null || b == null) return false;
-    return !DateUtils.dateOnly(
-          a,
-        ).isBefore(DateUtils.dateOnly(DateTime.now())) &&
-        b.isAfter(a);
+    return !DateUtils.dateOnly(a).isBefore(
+        DateUtils.dateOnly(DateTime.now())) && b.isAfter(a);
   }
 
   bool roomFitsGuests(HotelRoom r) => totalGuests <= r.maxGuests;
 
   bool isRoomBooked(HotelRoom r) {
-    final a = checkIn.value, b = checkOut.value;
+    final a = checkIn.value,
+        b = checkOut.value;
     if (a == null || b == null || !b.isAfter(a)) return false;
-    return bookings.any(
-      (x) =>
-          x.roomCode == r.code &&
-          a.isBefore(x.checkOut) &&
-          b.isAfter(x.checkIn),
-    );
+    return bookings.any((x) =>
+    x.roomCode == r.code && a.isBefore(x.checkOut) && b.isAfter(x.checkIn));
   }
 
   void error(String m) {
@@ -93,14 +88,12 @@ class BookingController extends GetxController {
   Future<void> pickCheckIn(BuildContext context) async {
     clearMessage();
     final today = DateUtils.dateOnly(DateTime.now());
-    final p = await showDatePicker(
-      context: context,
-      initialDate: _safeCheckIn(today),
-      firstDate: today,
-      lastDate: DateTime(today.year + 2, 12, 31),
-      helpText: 'SELECT CHECK-IN DATE',
-      builder: _pickerTheme,
-    );
+    final p = await showDatePicker(context: context,
+        initialDate: _safeCheckIn(today),
+        firstDate: today,
+        lastDate: DateTime(today.year + 2, 12, 31),
+        helpText: 'SELECT CHECK-IN DATE',
+        builder: _pickerTheme);
     if (p == null) return;
     checkIn.value = DateUtils.dateOnly(p);
     if (checkOut.value != null && !checkOut.value!.isAfter(checkIn.value!)) {
@@ -119,14 +112,12 @@ class BookingController extends GetxController {
       return;
     }
     final min = checkIn.value!.add(const Duration(days: 1));
-    final p = await showDatePicker(
-      context: context,
-      initialDate: _safeCheckOut(min),
-      firstDate: min,
-      lastDate: DateTime(min.year + 2, 12, 31),
-      helpText: 'SELECT CHECK-OUT DATE',
-      builder: _pickerTheme,
-    );
+    final p = await showDatePicker(context: context,
+        initialDate: _safeCheckOut(min),
+        firstDate: min,
+        lastDate: DateTime(min.year + 2, 12, 31),
+        helpText: 'SELECT CHECK-OUT DATE',
+        builder: _pickerTheme);
     if (p == null) return;
     checkOut.value = DateUtils.dateOnly(p);
     validateDatesAndRoom();
@@ -134,33 +125,27 @@ class BookingController extends GetxController {
 
   DateTime _safeCheckIn(DateTime today) =>
       checkIn.value != null &&
-          !DateUtils.dateOnly(checkIn.value!).isBefore(today)
-      ? DateUtils.dateOnly(checkIn.value!)
-      : today;
+          !DateUtils.dateOnly(checkIn.value!).isBefore(today) ? DateUtils
+          .dateOnly(checkIn.value!) : today;
 
   DateTime _safeCheckOut(DateTime min) =>
       checkOut.value != null && checkOut.value!.isAfter(checkIn.value!)
-      ? DateUtils.dateOnly(checkOut.value!)
-      : min;
+          ? DateUtils.dateOnly(checkOut.value!)
+          : min;
 
-  Widget _pickerTheme(BuildContext c, Widget? child) => Theme(
-    data: Theme.of(c).copyWith(
-      colorScheme: const ColorScheme.dark(
-        primary: Color(0xFFFFA500),
-        onPrimary: Colors.black,
-        surface: Color(0xFF121A2A),
-        onSurface: Colors.white,
-      ),
-    ),
-    child: child!,
-  );
+  Widget _pickerTheme(BuildContext c, Widget? child) =>
+      Theme(
+          data: Theme.of(c).copyWith(colorScheme: const ColorScheme.dark(
+              primary: Color(0xFFFFA500),
+              onPrimary: Colors.black,
+              surface: Color(0xFF121A2A),
+              onSurface: Colors.white)), child: child!);
 
   void selectRoom(HotelRoom r) {
     clearMessage();
     if (!datesAreValid) {
       error(
-        'Select valid check-in and check-out dates before choosing a room.',
-      );
+          'Select valid check-in and check-out dates before choosing a room.');
       return;
     }
     if (isRoomBooked(r)) {
@@ -202,15 +187,15 @@ class BookingController extends GetxController {
     if (r != null && !roomFitsGuests(r)) {
       selectedRoomCode.value = null;
       error(
-        'Selected room cannot accommodate $totalGuests guests. Please choose a larger room.',
-      );
+          'Selected room cannot accommodate $totalGuests guests. Please choose a larger room.');
       return;
     }
     if (datesAreValid) validateDatesAndRoom();
   }
 
   void validateDatesAndRoom() {
-    final a = checkIn.value, b = checkOut.value;
+    final a = checkIn.value,
+        b = checkOut.value;
     if (a == null || b == null) {
       selectedRoomCode.value = null;
       clearMessage();
@@ -237,13 +222,9 @@ class BookingController extends GetxController {
       error('${r.code} cannot accommodate $totalGuests guests.');
       return;
     }
-    success(
-      'Dates verified • $nights ${nights == 1 ? 'night' : 'nights'} available.',
-    );
-  }
-
-  String formatDate(DateTime? value) {
-    return DateUtils.formatDate(value);
+    success('Dates verified • $nights ${nights == 1
+        ? 'night'
+        : 'nights'} available.');
   }
 
   void confirmReservation() {
@@ -251,35 +232,59 @@ class BookingController extends GetxController {
       error('Please select both check-in and check-out dates.');
       return;
     }
+
     if (!datesAreValid) {
       error(
-        'Invalid dates. Check-out must be after check-in and check-in cannot be in the past.',
+        'Invalid dates. Check-out must be after check-in and '
+            'check-in cannot be in the past.',
       );
       return;
     }
-    final r = selectedRoom;
-    if (r == null) {
+
+    final room = selectedRoom;
+    if (room == null) {
       error('Please select one available room.');
       return;
     }
-    if (isRoomBooked(r)) {
+
+    if (isRoomBooked(room)) {
       selectedRoomCode.value = null;
-      error('${r.code} is already booked for the selected dates.');
+      error('${room.code} is already booked for the selected dates.');
       return;
     }
-    if (!roomFitsGuests(r)) {
+
+    if (!roomFitsGuests(room)) {
       selectedRoomCode.value = null;
       error('The selected room cannot accommodate all guests.');
       return;
     }
-    success('Reservation confirmed • ${r.code} • $nights nights • ₹$subtotal');
+
+    final bookedNights = nights;
+    final total = subtotal;
+
+    bookings.add(
+      RoomBooking(
+        roomCode: room.code,
+        checkIn: checkIn.value!,
+        checkOut: checkOut.value!,
+      ),
+    );
+
+
+    selectedRoomCode.value = null;
+    success(
+      'Reservation confirmed • ${room.code} • $bookedNights '
+          '${bookedNights == 1 ? 'night' : 'nights'} • ₹$total',
+    );
+
     Get.snackbar(
       'Reservation Confirmed',
-      '${r.type} (${r.code}) • $nights nights • ₹$subtotal',
+      '${room.type} (${room.code}) • $bookedNights '
+          '${bookedNights == 1 ? 'night' : 'nights'} • ₹$total',
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: const Color(0xFF0B2A25),
       colorText: Colors.white,
       margin: const EdgeInsets.all(16),
     );
   }
-}
+  }

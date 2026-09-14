@@ -46,5 +46,33 @@ class MockRooms {
       imageAsset: 'assets/rooms/family.png',
       badge: 'SPACIOUS',
     ),
+    HotelRoom(
+      code: 'R302',
+      type: 'Family Room1',
+      pricePerNight: 4400,
+      maxGuests: 5,
+      subtitle: '3 Queen Beds & Dining Area',
+      imageAsset: 'assets/rooms/family.png',
+
+    ),
+    HotelRoom(
+      code: 'R303',
+      type: 'Family Room2',
+      pricePerNight: 4400,
+      maxGuests: 6,
+      subtitle: '3 Queen Beds & Dining Area',
+      imageAsset: 'assets/rooms/deluxe.png',
+
+    ),
+    HotelRoom(
+      code: 'R304',
+      type: 'Family Room3',
+      pricePerNight: 4502,
+      maxGuests: 8,
+      subtitle: '4 Queen Beds & Dining Area',
+      imageAsset: 'assets/rooms/family.png',
+
+    ),
+
   ];
 }

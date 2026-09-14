@@ -6,7 +6,7 @@ class TopBar extends StatelessWidget {
   const TopBar({super.key});
   @override
   Widget build(BuildContext c) => Container(
-    height: 94,
+    height: 80,
     padding: const EdgeInsets.symmetric(horizontal: 28),
     decoration: const BoxDecoration(
       border: Border(bottom: BorderSide(color: Color(0xFF172131))),
@@ -14,18 +14,18 @@ class TopBar extends StatelessWidget {
     child: Row(
       children: [
         Container(
-          width: 50,
-          height: 50,
+          width: 45,
+          height: 45,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppColors.orange,
             borderRadius: BorderRadius.circular(16),
           ),
           child: const Text(
-            'L',
+            'R',
             style: TextStyle(
               color: Colors.black,
-              fontSize: 22,
+              fontSize: 18,
               fontWeight: FontWeight.w800,
             ),
           ),
@@ -38,7 +38,7 @@ class TopBar extends StatelessWidget {
             children: [
               Text(
                 AppConstants.appName,
-                style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
               ),
               SizedBox(height: 2),
               Row(
@@ -49,7 +49,7 @@ class TopBar extends StatelessWidget {
                     AppConstants.availableTonight,
                     style: TextStyle(
                       color: AppColors.gold,
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -59,8 +59,8 @@ class TopBar extends StatelessWidget {
           ),
         ),
         Container(
-          width: 50,
-          height: 50,
+          width: 44,
+          height: 44,
           decoration: BoxDecoration(
             color: Color(0xFF162033),
             shape: BoxShape.circle,

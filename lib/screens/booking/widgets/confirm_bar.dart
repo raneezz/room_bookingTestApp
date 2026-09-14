@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../controllers/BookingController.dart';
 
@@ -18,7 +17,7 @@ class ConfirmBar extends StatelessWidget {
     ),
     child: SizedBox(
       width: double.infinity,
-      height: 58,
+      height: 48,
       child: ElevatedButton.icon(
         onPressed: controller.confirmReservation,
         icon: const Icon(Icons.check_rounded, color: Colors.black),
@@ -26,7 +25,7 @@ class ConfirmBar extends StatelessWidget {
           'Confirm Reservation',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 17,
+            fontSize: 15,
             fontWeight: FontWeight.w900,
           ),
         ),

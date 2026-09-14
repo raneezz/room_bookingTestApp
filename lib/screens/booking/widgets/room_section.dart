@@ -29,10 +29,10 @@ class RoomSection extends StatelessWidget {
             const SizedBox(width: 9),
             const Expanded(
               child: Text(
-                'STEP 2: CHOOSE ROOM',
+                'CHOOSE ROOM',
                 style: TextStyle(
                   color: AppColors.gold,
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w800,
                 ),
               ),

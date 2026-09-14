@@ -32,7 +32,7 @@ class SearchDatesCard extends StatelessWidget {
                   'SELECT STAY DATES',
                   style: TextStyle(
                     color: AppColors.gold,
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -131,7 +131,7 @@ class _DateField extends StatelessWidget {
             label,
             style: const TextStyle(
               color: AppColors.secondaryText,
-              fontSize: 15,
+              fontSize: 13,
             ),
           ),
           const SizedBox(height: 7),
@@ -139,7 +139,7 @@ class _DateField extends StatelessWidget {
             value.isEmpty ? 'Select date' : value,
             style: TextStyle(
               color: value.isEmpty ? const Color(0xFF687790) : Colors.white,
-              fontSize: 15,
+              fontSize: 12,
               fontWeight: value.isEmpty ? FontWeight.w400 : FontWeight.w700,
             ),
           ),

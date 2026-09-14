@@ -51,12 +51,12 @@ class RoomCard extends StatelessWidget {
                 RoomImage(
                   room: room,
                   disabled: disabled,
-                  statusText: capacityExceeded ? 'CAPACITY' : 'BOOKED',
+                  statusText: capacityExceeded ? 'FULL' : 'BOOKED',
                 ),
                 const SizedBox(width: 18),
                 Expanded(
                   child: SizedBox(
-                    height: 132,
+                    height: 122,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -75,8 +75,11 @@ class RoomCard extends StatelessWidget {
                           room.type,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 19,
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: disabled
+                                ? const Color(0xFF556175)
+                                : const Color(0xFFAAB8CC),
                             fontWeight: FontWeight.w800,
                           ),
                         ),
@@ -85,9 +88,11 @@ class RoomCard extends StatelessWidget {
                           room.subtitle,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Color(0xFF96A5BD),
-                            fontSize: 14,
+                          style: TextStyle(
+                            color: disabled
+                              ? const Color(0xFF67748A)
+                                : const Color(0xFFAAB8CC),
+                            fontSize: 12,
                           ),
                         ),
                         const Spacer(),
@@ -106,15 +111,15 @@ class RoomCard extends StatelessWidget {
                             const SizedBox(width: 6),
                             Flexible(
                               child: Text(
-                                'Max ${room.maxGuests} Guests',
+                                'Max ${room.maxGuests}',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   color: Color(0xFF9AA8BF),
-                                  fontSize: 13,
+                                  fontSize: 12,
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 15),
                             Text(
                               CurrencyUtils.formatRupees(
                                 room.pricePerNight,
@@ -123,7 +128,7 @@ class RoomCard extends StatelessWidget {
                                 color: disabled
                                     ? const Color(0xFF67748A)
                                     : const Color(0xFFAAB8CC),
-                                fontSize: 16,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -171,12 +176,12 @@ class RoomImage extends StatelessWidget {
             opacity: disabled ? .42 : 1,
             child: Image.asset(
               room.imageAsset,
-              width: 155,
-              height: 132,
+              width: 135,
+              height: 112,
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => Container(
-                width: 155,
-                height: 132,
+                width: 135,
+                height: 112,
                 color: const Color(0xFF263143),
                 child: const Icon(
                   Icons.hotel_rounded,
@@ -265,8 +270,8 @@ class SelectionIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 160),
-      width: 28,
-      height: 28,
+      width: 20,
+      height: 20,
       decoration: BoxDecoration(
         color: selected ? AppColors.orange : Colors.transparent,
         shape: BoxShape.circle,

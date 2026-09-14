@@ -15,10 +15,10 @@ class ValidationBanner extends StatelessWidget {
     final fg = isError ? const Color(0xFFFF8F9C) : const Color(0xFF49E5BD);
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
         color: isError ? const Color(0xFF2B171B) : const Color(0xFF092923),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: isError ? const Color(0xFFB84755) : const Color(0xFF008F73),
         ),
@@ -36,7 +36,7 @@ class ValidationBanner extends StatelessWidget {
               message,
               style: TextStyle(
                 color: fg,
-                fontSize: 13,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
             ),

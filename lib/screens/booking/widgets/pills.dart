@@ -18,7 +18,7 @@ class GoldPill extends StatelessWidget {
       text,
       style: const TextStyle(
         color: AppColors.gold,
-        fontSize: 13,
+        fontSize: 11,
         fontWeight: FontWeight.w800,
       ),
     ),

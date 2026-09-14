@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../controllers/BookingController.dart';
+import '../widgets/searchDatesCard.dart';
 import '../widgets/top_bar.dart';
 
 class BookingPage extends GetView<BookingController> {
@@ -18,8 +19,11 @@ class BookingPage extends GetView<BookingController> {
                 slivers: [
                   SliverPadding(
                     padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
-                    sliver: SliverList(delegate: SliverChildListDelegate([])),
+                    sliver: SliverList(delegate: SliverChildListDelegate([
+                      SearchDatesCard(controller: controller),
+                    ])),
                   ),
+
                 ],
               ),
 
